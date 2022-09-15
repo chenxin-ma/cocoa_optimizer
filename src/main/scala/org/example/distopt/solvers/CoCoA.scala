@@ -57,7 +57,6 @@ object CoCoA {
                 "primal_objective:" + OptUtils.computePrimalObjective(data, w, params.lambda),
                 "primaldual_gap:" + OptUtils.computeDualityGap(data, w, alpha, params.lambda),
                 "test error:" + OptUtils.computeClassificationError(debug.testData, w) )
-//        if (debug.testData != null) { println("test error: " + OptUtils.computeClassificationError(debug.testData, w)) }
       }
 
       // optionally checkpoint RDDs

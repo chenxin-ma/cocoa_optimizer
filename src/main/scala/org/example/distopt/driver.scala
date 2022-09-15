@@ -77,21 +77,6 @@ object driver {
     val (finalwCoCoA, finalalphaCoCoA) = CoCoA.runCoCoA(trainData, params, debug, plus=false)
     OptUtils.printSummaryStatsPrimalDual("CoCoA", trainData, finalwCoCoA, finalalphaCoCoA, lambda, testData)
 
-
-    // optionally run other methods for comparison
-    // run Mini-batch CD
-    val (finalwMbCD, finalalphaMbCD) = MinibatchCD.runMbCD(data, params, debug)
-    OptUtils.printSummaryStatsPrimalDual("Mini-batch CD", data, finalwMbCD, finalalphaMbCD, lambda, testData)
-
-    // run Mini-batch SGD
-    val finalwMbSGD = SGD.runSGD(data, params, debug, local=false)
-    OptUtils.printSummaryStats("Mini-batch SGD", data, finalwMbSGD, lambda, testData)
-
-    // run Local-SGD
-    val finalwLocalSGD = SGD.runSGD(data, params, debug, local=true)
-    OptUtils.printSummaryStats("Local SGD", data, finalwLocalSGD, lambda, testData)
-
-
     sc.stop()
   }
 }
