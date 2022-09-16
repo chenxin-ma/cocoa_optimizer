@@ -49,10 +49,12 @@ object CoCoA {
       val zipData = alpha.zip(dataArr)
 
       // find updates to alpha, w
-      val updates = zipData.mapPartitions(partitionUpdate(_, w, params.localIters, params.lambda, params.n, scaling, debug.seed + t, plus, parts * params.gamma), preservesPartitioning = true).persist()
+      val updates = zipData.mapPartitions(partitionUpdate(_, w, params.localIters, params.lambda,
+                                                  params.n, scaling, debug.seed + t, plus,
+                                                  parts * params.gamma), preservesPartitioning = true).persist()
       alpha = updates.map(kv => kv._2)
       val primalUpdates = updates.map(kv => kv._1).reduce(_ + _)
-      w += (primalUpdates * scaling)
+      w += primalUpdates
 
       // optionally calculate errors
       runtime = runtime + (System.nanoTime - t1) / 1e9d
