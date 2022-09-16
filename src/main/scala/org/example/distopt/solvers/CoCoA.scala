@@ -39,8 +39,13 @@ object CoCoA {
     println("Iteration:" + 0,
             "primal_objective:" + OptUtils.computePrimalObjective(data, w, params.lambda),
             "primaldual_gap:" + OptUtils.computeDualityGap(data, w, alpha, params.lambda),
-            "test error:" + OptUtils.computeClassificationError(debug.testData, w) )
+            "test error:" + OptUtils.computeClassificationError(debug.testData, w),
+            "runtime:" + 0 )
+
+    var runtime = 0.0
+
     for(t <- 1 to params.numRounds) {
+      val t1 = System.nanoTime
 
       // zip alpha with data
       val zipData = alpha.zip(dataArr)
@@ -52,12 +57,13 @@ object CoCoA {
       w += (primalUpdates * scaling)
 
       // optionally calculate errors
-      if (debug.debugIter > 0 && t % debug.debugIter == 0) {
-        println("Iteration:" + t,
-                "primal_objective:" + OptUtils.computePrimalObjective(data, w, params.lambda),
-                "primaldual_gap:" + OptUtils.computeDualityGap(data, w, alpha, params.lambda),
-                "test error:" + OptUtils.computeClassificationError(debug.testData, w) )
-      }
+      runtime = runtime + (System.nanoTime - t1) / 1e9d
+
+      println("Iteration:" + t,
+              "primal_objective:" + OptUtils.computePrimalObjective(data, w, params.lambda),
+              "primaldual_gap:" + OptUtils.computeDualityGap(data, w, alpha, params.lambda),
+              "test error:" + OptUtils.computeClassificationError(debug.testData, w),
+              "runtime:" + runtime )
 
       // optionally checkpoint RDDs
       if(t % debug.chkptIter == 0){
