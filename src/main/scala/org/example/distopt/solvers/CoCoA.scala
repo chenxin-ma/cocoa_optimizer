@@ -9,9 +9,7 @@ import org.example.distopt.utils._
 object CoCoA {
 
   /**
-   * CoCoA/CoCoA+ - Communication-efficient distributed dual Coordinate Ascent.
-   * Using LocalSDCA as the local dual method. Here implemented for standard
-   * hinge-loss SVM. For other objectives, adjust localSDCA accordingly.
+   * Here implemented for standard hinge-loss SVM. For other objectives, adjust localSDCA accordingly.
    *
    * @param data RDD of all data examples
    * @param params Algorithmic parameters
@@ -119,10 +117,6 @@ object CoCoA {
    * with taking the information of the other workers into account, by respecting the
    * shared wInit vector.
    * Here we perform coordinate updates for the SVM dual objective (hinge loss).
-   *
-   * Note that SDCA for hinge-loss is equivalent to LibLinear, where using the
-   * regularization parameter  C = 1.0/(lambda*numExamples), and re-scaling
-   * the alpha variables with 1/C.
    *
    * @param localData The local data examples
    * @param wInit
